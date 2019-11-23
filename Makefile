@@ -4,7 +4,7 @@ examples:
 	gcc examples.c -o examples $(FLAGS)
 
 tests:
-	gcc tests.c -o tests $(FLAGS)
+	gcc tests.c -g3 -o tests $(FLAGS)
 	./tests
 	rm tests
 
