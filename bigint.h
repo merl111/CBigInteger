@@ -571,7 +571,13 @@ int bigint_count_digits(const char *src)
     int n = 0;
     for (; *src; src++)
     {
-        if (bigint_word_from_char(*src) != BIGINT_WORD_MAX)
+        bigint_word digit = bigint_word_from_char(*src);
+
+        if (digit == BIGINT_NEG_SIGN){
+            continue;
+        }
+
+        if (digit != BIGINT_WORD_MAX)
         { 
             n++;
         }
@@ -1625,7 +1631,7 @@ char *bigint_2hex(const bigint *a)
 		*p++ = '-';
 	if (a->capacity == 0)
 		*p++ = '0';
-	for (i = a->capacity - 1; i >=0; i--) {
+	for (i = a->size - 1; i >=0; i--) {
 		for (j = BIGINT_BITS - 8; j >= 0; j -= 8) {
 			v = ((int)(a->words[i] >> (long)j)) & 0xff;
 			if (z || (v != 0)) {
